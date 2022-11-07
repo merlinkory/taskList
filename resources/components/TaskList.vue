@@ -11,7 +11,7 @@
                 <div v-for="(tasks, staff) in taskBystaff">
                     <h4>{{staff}}</h4>
                     <ul>
-                        <li v-for="task in tasks">{{task}}</li>
+                        <li class="li_task" v-for="task in tasks">{{task}}</li>
                     </ul>
                 </div>
             </div>
@@ -53,5 +53,8 @@ export default {
     border: 1px solid;
     margin-top: 5px;
     padding-left: 10px;
+}
+.li_task{
+    padding-bottom: 10px;
 }
 </style>
