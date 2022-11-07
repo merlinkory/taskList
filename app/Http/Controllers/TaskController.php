@@ -22,7 +22,7 @@ class TaskController extends Controller
 
         $taskList = DB::table('tasks')
             ->join('staff','tasks.staff_id','staff.id')
-            ->select('tasks.title','tasks.date','staff.name')
+            ->select('tasks.id','tasks.title','tasks.date','staff.name')
             ->where('tasks.date','>',$date)
             ->orderBy('tasks.date','asc')
             ->get();
@@ -32,28 +32,19 @@ class TaskController extends Controller
             'Четверг', 'Пятница', 'Суббота'
         ];
 
-        $tasks = [
-            'date'=>'07-11-2022',
-            'tasks'=>[
-                'Maksim'=>[
-                    'task 1',
-                    'task 2'
-                ]
-            ]
-        ];
-        $taskGroupByStaff = [];
-//        $taskGroup = [];
+        $taskGroup = [];
         foreach ($taskList as $task){
             $dayOfWeek = $days[date("w", strtotime($task->date) )];
-//            $taskGroup[] = [
-//                'date' => $task->date,
-//                'dayOfWeek' => $dayOfWeek,
-//                ''
-//            ];
-            $taskGroupByStaff[$task->date . " : " .$dayOfWeek][$task->name][] = $task->title;
+
+                $taskGroup[$task->date]['dayOfWeek'] = $dayOfWeek;
+                $taskGroup[$task->date]['tasks'][$task->name][] = [
+                    'id' => $task->id,
+                    'title' => $task->title
+                ];
+
         }
 
-        return response($taskGroupByStaff)->header('Content-Type', 'application/json');
+        return response($taskGroup)->header('Content-Type', 'application/json');
     }
 
     /**

@@ -34,7 +34,7 @@ class LoginController extends Controller
             return redirect(route('user.taskmanager'));
         }
 
-        return view('login');
+        return view('welcome');
     }
 
     public function logout() {

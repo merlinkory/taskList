@@ -1,7 +1,7 @@
 <template>
     <div class="form_wrapper">
         <form @submit.prevent="createTask">
-            <input v-model="taskTitle" placeholder="task title" type="text" id="title" class="task_title"/><br/>
+            <textarea v-model="taskTitle" placeholder="task title" type="text" id="title" class="task_title"></textarea><br/>
             <select class="staff_list" id="staff">
                 <option v-for="_staff in staff" v-bind:value="_staff.id">{{ _staff.name}}</option>
             </select><br/>
@@ -62,11 +62,12 @@ export default {
     text-align: left;
 }
 .task_title{
-    font-size: 26px;
+    font-size: 18px;
     padding: 10px 10px 10px 10px;
     border-radius: 5px;
     border: 1px solid #000;
     width: 90%;
+    height: 100px;
 }
 .staff_list{
     font-size: 26px;
