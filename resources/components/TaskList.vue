@@ -11,7 +11,7 @@
                 <div v-for="(tasks, staff) in data.tasks">
                     <h4>{{staff}}</h4>
                     <ul>
-                        <li v-for="task in tasks" @dblclick="changeTask(task.id)">{{task.title}}</li>
+                        <li class="li_task" v-for="task in tasks" @dblclick="changeTask(task.id)">{{task.title}}</li>
                     </ul>
                 </div>
             </div>
