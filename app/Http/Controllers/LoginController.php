@@ -19,7 +19,7 @@ class LoginController extends Controller
         $user = User::where('email',$formData['email'])->where('password',$formData['password'])->get()->first();
 
         if($user){
-            auth()->login($user);
+            auth()->login($user, true);
 
             return redirect(route('user.taskmanager'));
         }

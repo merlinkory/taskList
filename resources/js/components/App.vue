@@ -1,7 +1,9 @@
 <template>
-    <router-link to="/list">список задач</router-link> |
-    <router-link to="/create">создать задачу</router-link> <br/>
-    <hr><br/>
+    <b-nav tabs>
+        <b-nav-item><router-link to="/list">список задач</router-link></b-nav-item>
+        <b-nav-item><router-link to="/create">создать задачу</router-link></b-nav-item>
+        <b-nav-item><a href="/logout">Выйти</a></b-nav-item>
+    </b-nav>
     <div class="wrapper">
     <router-view></router-view>
     </div>
