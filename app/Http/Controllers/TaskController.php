@@ -128,6 +128,13 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $task = Task::find($id);
+
+        if($task){
+            $task->delete();
+            return response(['message'=>'ok'], 200)->header('Content-Type', 'application/json');
+        }else{
+            //
+        }
     }
 }

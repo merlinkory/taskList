@@ -31,7 +31,9 @@
             <b-form-select v-model="taskStaffId" :options="staff"></b-form-select><br/>
             <b-form-select v-model="taskStatus" :options="taskStatuses"></b-form-select><br/>
         </div>
-        <b-button id="saveTaskBtn" class="mt-3" block @click="changeTask()">Сохранить изменения</b-button>
+        <b-button id="saveTaskBtn" class="mt-3" block @click="changeTask()">Сохранить</b-button>
+        &nbsp;&nbsp;&nbsp;
+        <b-button id="deleteTaskBtn" class="mt-3" block @click="deleteTask()">Удалить</b-button>
     </b-modal>
 </template>
 
@@ -70,6 +72,15 @@ export default {
             this.taskStatus = task.status;
             this.taskDate = task.date;
             this.taskStaffId = staff_id;
+        },
+        async deleteTask(){
+            if(!confirm('Вы уверены в удаление ?')) return false;
+            let response = await axios.delete('/tasks/' + this.taskId);
+            if(response.status == 200){
+                alert('Задача удалена');
+                await this.getTaskList();
+                this.taskDetailShow = !this.taskDetailShow;
+            }
         },
         async changeTask(){
             console.log(this.taskTitle,this.taskId,this.taskStatus, this.taskStaffId);
@@ -127,13 +138,19 @@ export default {
 .new{
     padding-bottom: 10px;
     padding-right:10px;
+    margin-right: 20px;
+
 }
 .pending{
     padding-bottom: 10px;
     padding-right:10px;
     font-style: italic;
+    margin-right: 20px;
+
 }
 .completed{
     background-color: #72fa24;
+    margin-right: 20px;
+
 }
 </style>
