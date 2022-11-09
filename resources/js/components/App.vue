@@ -2,7 +2,9 @@
     <router-link to="/list">список задач</router-link> |
     <router-link to="/create">создать задачу</router-link> <br/>
     <hr><br/>
+    <div class="wrapper">
     <router-view></router-view>
+    </div>
 </template>
 
 <script>
@@ -16,5 +18,7 @@ export default {
 </script>
 
 <style scoped>
-
+.wrapper{
+    padding: 5px;
+}
 </style>

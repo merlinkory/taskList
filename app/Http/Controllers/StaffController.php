@@ -15,7 +15,11 @@ class StaffController extends Controller
     public function index()
     {
         $staffList = Staff::All();
-        return response($staffList->toArray(), 200)->header('Content-Type', 'application/json');
+        $output = [];
+        foreach ($staffList as $staff){
+            $output[$staff->id] = $staff->name;
+        }
+        return response($output, 200)->header('Content-Type', 'application/json');
     }
 
     /**

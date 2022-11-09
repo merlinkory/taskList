@@ -22,26 +22,27 @@ class TaskController extends Controller
 
         $taskList = DB::table('tasks')
             ->join('staff','tasks.staff_id','staff.id')
-            ->select('tasks.id','tasks.title','tasks.date','staff.name')
+            ->select('tasks.id','tasks.title','tasks.date','tasks.status','staff.name as staff_name', 'staff.id as staff_id')
             ->where('tasks.date','>',$date)
             ->orderBy('tasks.date','asc')
             ->get();
-        //grouping by date & staff
+
         $days = [
             'Воскресенье', 'Понедельник', 'Вторник', 'Среда',
             'Четверг', 'Пятница', 'Суббота'
         ];
 
+        //grouping by date & staff
         $taskGroup = [];
         foreach ($taskList as $task){
-            $dayOfWeek = $days[date("w", strtotime($task->date) )];
-
-                $taskGroup[$task->date]['dayOfWeek'] = $dayOfWeek;
-                $taskGroup[$task->date]['tasks'][$task->name][] = [
+                $taskGroup[$task->date]['dayOfWeek'] = $days[date("w", strtotime($task->date) )];
+                $taskGroup[$task->date]['dateUserFriendly'] = Carbon::create($task->date)->day . ' '. Carbon::create($task->date)->monthName;;
+                $taskGroup[$task->date]['tasks'][$task->staff_id][] = [
                     'id' => $task->id,
-                    'title' => $task->title
+                    'title' => $task->title,
+                    'status' => $task->status,
+                    'date' => $task->date
                 ];
-
         }
 
         return response($taskGroup)->header('Content-Type', 'application/json');
@@ -105,7 +106,18 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+//        dd($request->staff_id);
+        $task = Task::find($id);
+        if($task){
+            $task->title = $request->title;
+            $task->status = $request->status;
+            $task->staff_id = $request->staff_id;
+            $task->date = $request->date;
+            $task->save();
+            return response($task->toArray(), 200)->header('Content-Type', 'application/json');
+        }else{
+            return response(['message'=>'error'], 500)->header('Content-Type', 'application/json');
+        }
     }
 
     /**

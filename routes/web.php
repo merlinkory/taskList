@@ -22,8 +22,9 @@ Route::get('/', function () {
 //    'index'
 //]);
 
-Route::get('tasks/{subdays}', [TaskController::class, 'index']);
+Route::get('tasks/{subdays}', [TaskController::class, 'index'])->middleware('auth');
 Route::post('tasks',[TaskController::class, 'store']);
+Route::post('tasks/{id}',[TaskController::class, 'update']);
 
 Route::resource('staff', StaffController::class);
 

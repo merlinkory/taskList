@@ -3,7 +3,7 @@
         <form @submit.prevent="createTask">
             <textarea v-model="taskTitle" placeholder="task title" type="text" id="title" class="task_title"></textarea><br/>
             <select class="staff_list" id="staff">
-                <option v-for="_staff in staff" v-bind:value="_staff.id">{{ _staff.name}}</option>
+                <option v-for="(staff_name, staff_id) in staff" v-bind:value="staff_id">{{ staff_name }}</option>
             </select><br/>
             <input v-model="taskDate" type="date" class="input_date"><br/>
             <button class="create_task_btn">Создать задачу</button>
