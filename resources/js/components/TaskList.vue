@@ -5,8 +5,8 @@
         <button @click="getTaskList(30)">30 дней</button>
     </div>
     <div class="wrapper">
-        <div class="task_wrapper" v-for="(data, date) in taskList">
-            <div v-bind:class="date >= new Date().toISOString().substr(0, 10) ? 'task_future' : 'task_old'">
+        <div class="task_wrapper" v-for="(data, date) in taskList" v-bind:name="date">
+            <div v-bind:class="data.css_name">
                 <h3>{{data.dateUserFriendly}} - ({{data.dayOfWeek}})</h3>
                 <div v-for="(tasks, staff_id) in data.tasks">
                     <h4>{{this.staff[staff_id]}}</h4>
@@ -83,6 +83,8 @@ export default {
             }
         },
         async changeTask(){
+
+            document.getElementById('saveTaskBtn').setAttribute('disabled', true);
             console.log(this.taskTitle,this.taskId,this.taskStatus, this.taskStaffId);
             let payload = {
                 'title': this.taskTitle,
@@ -100,7 +102,10 @@ export default {
                 alert('Задача успешно изменена');
                 await this.getTaskList();
                 this.taskDetailShow = !this.taskDetailShow;
+            }else{
+                alert('Произошла ошибка, обратитесь к разрабочику');
             }
+            document.getElementById('saveTaskBtn').setAttribute('disabled', false);
 
         },
         async getTaskList(subDays = 7){
@@ -122,15 +127,21 @@ export default {
 </script>
 
 <style scoped>
-.task_old{
+.old_day{
     background-color: #cccccc;
     border: 1px solid;
     margin-top: 5px;
     padding-left: 10px;
 }
 
-.task_future{
+.future_day{
     background-color: #c3e3b5;
+    border: 1px solid;
+    margin-top: 5px;
+    padding-left: 10px;
+}
+.current_day{
+    background-color: #80c0f1;
     border: 1px solid;
     margin-top: 5px;
     padding-left: 10px;

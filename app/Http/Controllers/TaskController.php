@@ -35,8 +35,16 @@ class TaskController extends Controller
         //grouping by date & staff
         $taskGroup = [];
         foreach ($taskList as $task){
+
+                $cssName = 'old_day';
+                if (Carbon::create($task->date)->day == Carbon::now()->day) {
+                    $cssName = 'current_day';
+                } else if (Carbon::create($task->date)->day > Carbon::now()->day){
+                    $cssName = 'future_day';
+                }
                 $taskGroup[$task->date]['dayOfWeek'] = $days[date("w", strtotime($task->date) )];
                 $taskGroup[$task->date]['dateUserFriendly'] = Carbon::create($task->date)->day . ' '. Carbon::create($task->date)->monthName;;
+                $taskGroup[$task->date]['css_name'] = $cssName;
                 $taskGroup[$task->date]['tasks'][$task->staff_id][] = [
                     'id' => $task->id,
                     'title' => $task->title,

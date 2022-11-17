@@ -23,7 +23,7 @@
         @enderror
     </div>
     <div class="form-group">
-        <input  class="form-control my_input" id="password" name="password" type="text" placeholder="password">
+        <input  class="form-control my_input" id="password" name="password" type="password">
         @error('password')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
