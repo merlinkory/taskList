@@ -84,7 +84,7 @@ export default {
         },
         async changeTask(){
 
-            document.getElementById('saveTaskBtn').setAttribute('disabled', true);
+            document.getElementById('saveTaskBtn').disabled = true;
             console.log(this.taskTitle,this.taskId,this.taskStatus, this.taskStaffId);
             let payload = {
                 'title': this.taskTitle,
@@ -97,6 +97,7 @@ export default {
                 'Content-Type': 'application/json'
             }
         });
+
             if(response.status == 200) {
                 this.taskTitle = this.taskStatus = this.taskStaffId = this.taskDate = 0;
                 alert('Задача успешно изменена');
@@ -105,7 +106,8 @@ export default {
             }else{
                 alert('Произошла ошибка, обратитесь к разрабочику');
             }
-            document.getElementById('saveTaskBtn').setAttribute('disabled', false);
+            document.getElementById('saveTaskBtn').disabled = false;
+
 
         },
         async getTaskList(subDays = 7){
