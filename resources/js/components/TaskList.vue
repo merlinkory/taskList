@@ -4,6 +4,9 @@
         <button @click="getTaskList(10)">10 дней</button> |
         <button @click="getTaskList(30)">30 дней</button>
     </div>
+    <div class="text-center">
+        <b-spinner style="width: 5rem; height: 5rem;" label="Loading..." v-if="loaded === false"></b-spinner>
+    </div>
     <div class="wrapper">
         <div class="task_wrapper" v-for="(data, date) in taskList" v-bind:name="date">
             <div v-bind:class="data.css_name">
@@ -44,6 +47,8 @@ export default {
     name: "TaskList",
     data(){
         return{
+            loaded: false,
+            subDays :7, // кол-во за которое берем таски в прошлом времени
             taskList:[],
             staff: [],
 
@@ -78,7 +83,7 @@ export default {
             let response = await axios.delete('/tasks/' + this.taskId);
             if(response.status == 200){
                 alert('Задача удалена');
-                await this.getTaskList();
+                await this.getTaskList(subDays);
                 this.taskDetailShow = !this.taskDetailShow;
             }
         },
@@ -101,8 +106,9 @@ export default {
             if(response.status == 200) {
                 this.taskTitle = this.taskStatus = this.taskStaffId = this.taskDate = 0;
                 alert('Задача успешно изменена');
-                await this.getTaskList();
                 this.taskDetailShow = !this.taskDetailShow;
+                this.taskList = [];
+                await this.getTaskList(this.subDays);
             }else{
                 alert('Произошла ошибка, обратитесь к разрабочику');
             }
@@ -112,8 +118,11 @@ export default {
         },
         async getTaskList(subDays = 7){
 
+            this.subDays = subDays;
+            this.loaded = false;
             let response = await axios.get('/tasks/' + subDays );
             this.taskList = response.data;
+            this.loaded = true;
         },
         async getStaffList() {
             let response = await axios.get('/staff');
