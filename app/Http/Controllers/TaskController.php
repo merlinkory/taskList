@@ -37,9 +37,9 @@ class TaskController extends Controller
         foreach ($taskList as $task){
 
                 $cssName = 'old_day';
-                if (Carbon::create($task->date)->day == Carbon::now()->day) {
+                if ($task->date == Carbon::now()->toDateString()) {
                     $cssName = 'current_day';
-                } else if (Carbon::create($task->date)->day > Carbon::now()->day){
+                } else if (Carbon::create($task->date)->toDate() > Carbon::now()->toDate()){
                     $cssName = 'future_day';
                 }
                 $taskGroup[$task->date]['dayOfWeek'] = $days[date("w", strtotime($task->date) )];

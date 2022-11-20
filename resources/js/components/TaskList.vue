@@ -83,7 +83,7 @@ export default {
             let response = await axios.delete('/tasks/' + this.taskId);
             if(response.status == 200){
                 alert('Задача удалена');
-                await this.getTaskList(subDays);
+                await this.getTaskList(this.subDays);
                 this.taskDetailShow = !this.taskDetailShow;
             }
         },
@@ -104,10 +104,10 @@ export default {
         });
 
             if(response.status == 200) {
-                this.taskTitle = this.taskStatus = this.taskStaffId = this.taskDate = 0;
                 alert('Задача успешно изменена');
                 this.taskDetailShow = !this.taskDetailShow;
-                this.taskList = [];
+                this.taskTitle = this.taskStatus = this.taskStaffId = this.taskDate = 0;
+                // this.taskList = [];
                 await this.getTaskList(this.subDays);
             }else{
                 alert('Произошла ошибка, обратитесь к разрабочику');
