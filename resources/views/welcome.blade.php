@@ -14,7 +14,7 @@
     </style>
 </head>
 <body>
-<form class="col-3 offset-4 border rounded" style="text-align: center; margin-top: 30%;" method="POST" action="{{route('user.login')}}">
+<form class="col-3 offset-4 border rounded" style="text-align: center; margin-top: 30%;" method="POST" action="/login">
     @csrf
     <div class="form-group">
         <input class="form-control my_input" id="email" name="email" type="text" placeholder="Email">
